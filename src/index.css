@@ -1,0 +1,102 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base{
+    body{
+        background: rgb(250, 250, 250);
+    }
+
+    /* about, offer and contact banner*/
+    .hero_section{
+        padding-top: 5rem;
+    }
+
+    /* about banner*/
+    .banner_section_about{
+        width: 100%;
+        height: 20vh;
+        background-image: url('./assets/about_banner.jpg');
+        background-position: center;
+        background-size: cover;
+        background-color: black;
+    }
+    /* end of about banner*/
+
+
+    /* Contact banner*/
+    .banner_section_contact{
+        width: 100%;
+        height: 20vh;
+        background-image: url('./assets/contact_banner.jpg');
+        background-position: center;
+        background-size: cover;
+        background-color: black;
+    }
+    /* end of contact banner*/
+
+    /* Offers banner*/
+    .banner_section_contact{
+        width: 100%;
+        height: 20vh;
+        background-image: url('./assets/offers_banner.jpg');
+        background-position: center;
+        background-size: cover;
+        background-color: black;
+    }
+    /* end of offers banner*/
+
+
+    /* end of about, offer and contact banner*/
+
+    .clip{
+        clip-path: polygon(33% 24%, 43% 50%, 83% 73%, 100% 100%, 47% 100%, 0 100%, 0 0);
+        background-color: rgb(248 113 113);
+    }
+
+    
+    /* main header navbar section home page*/
+    .fine ul li .active{
+        color: #fc036f;
+    }
+    
+    /* dashboard header navbar section*/
+    .header .active span{
+        color: #fc036f;
+    }
+    .header .active h1{
+        color: #fc036f;
+    }
+    /* End of dashboard header navbar section*/
+
+    
+
+    /* Border-radius for current location section*/
+    .borderA{
+        border-radius: 5px;
+        background: #878787; 
+        box-shadow:  11px 11px 22px #515151,
+        -11px -11px 22px #bdbdbd;
+    }
+ 
+    
+
+
+    .shadowA{
+        border-radius: 5px;
+        background: #fff;
+        box-shadow:  6px 6px 12px #eaeaea,
+            -6px -6px 12px #ffffff;
+    }
+    
+    
+    /* registration page error handling */
+    .error{
+        margin-top: -30px;
+        color:#fc036f;
+        font-size : 0.8rem;
+        font-family: 'Signika', sans-serif;
+    }
+
+}
+   
