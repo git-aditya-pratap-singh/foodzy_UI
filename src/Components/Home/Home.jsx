@@ -1,15 +1,13 @@
-import React from "react";
+import React, {useEffect} from "react";
 import "./Home.css";
 
 import Serve from "./Service";
 import Tasty from "./Tasty";
 import Testimonial from "./Testimonial";
 import Footer from "../Footer/Footer";
-
 import { FaShippingFast } from "react-icons/fa";
 import { BsShieldFillCheck } from "react-icons/bs";
 import { CiBurger } from "react-icons/ci";
-
 import {useNavigate} from 'react-router-dom';
 import hero from "../../assets/hero.png";
 
@@ -22,24 +20,24 @@ const Home = ()=>{
             
            {/* Writing container*/}
             <div className="basis-1/2 px-6 lg:px-24 justify-center flex flex-col gap-y-5 lg:gap-y-8">
-               <h1 className="text-xl font">Easy way to make an order</h1>
+                <h1 className="text-xl font">Easy way to make an order</h1>
                
-               
-               <h2 className="text-3xl sm:text-4xl lg:text-[2.5rem] lg:pr-[5rem] font font-bold ">
-                <span className="text-[#df2020] ">HUNGRY? </span>
-                Just wait food at 
-                <span className="text-[#df2020]"> your door</span>
+                <h2 className="text-3xl sm:text-4xl lg:text-[2.5rem] lg:pr-[5rem] font font-bold ">
+                    <span className="text-[#df2020] ">HUNGRY? </span>
+                        Just wait food at 
+                    <span className="text-[#df2020]"> your door</span>
                 </h2>
             
               
 
-               <p className="text-[0.9rem] md:text-[1rem] text-gray-500 fonts font-light">You select, we deliver- fast, fresh, and instant food and Make your day 
-                fabulous with our hassle-free delivery.</p>
+                <p className="text-[0.9rem] md:text-[1rem] text-gray-500 fonts font-light">You select, we deliver- fast, fresh, and instant food and Make your day 
+                    fabulous with our hassle-free delivery.</p>
 
-                <button className="bg-[#df2020] w-36 p-2 rounded-md text-white flex justify-center items-center drop-shadow-xl"
-                onClick={()=> navigate('../login')}>
-                    <CiBurger size={22} />
-                    Order now</button>
+                <button className="bg-[#df2020] w-36 p-2 rounded-md text-white flex justify-center items-center drop-shadow-xl active:scale-90 ease-in-out duration-300"
+                    onClick={()=> navigate('../login')}>
+                        <CiBurger size={22} />
+                            Order now
+                </button>
 
                 <div className="flex flex-row gap-x-4 lg:gap-x-8 text-[0.8rem] sm:text-[0.9rem] fonts text-gray-800">
 

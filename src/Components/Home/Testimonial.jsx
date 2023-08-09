@@ -1,5 +1,4 @@
 import React from "react";
-
 import network from "../../assets/network.png";
 import testimonials from "./TestimonialData";
 
@@ -11,15 +10,12 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 
-//import "./styles.css";
-
 // import required modules
 import { Autoplay, Pagination, Navigation } from "swiper";
 
 const Testimonial = ()=>{
     return(
-       <>
-
+      <>
       <section className="w-10/12 mx-auto flex flex-col md:flex-row justify-center mt-20 lg:mt-10 ">
 
         <div className="basis-1/2 flex flex-col justify-center items-start lg:px-8 space-y-3 pt-10 lg:pt-0">

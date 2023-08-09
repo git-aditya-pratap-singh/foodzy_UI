@@ -7,6 +7,8 @@ import { useAuth } from "../../Context/auth";
 import { useSelector, useDispatch } from "react-redux";
 import { UserState } from "../../Store/StateSlice";
 
+import { ServerAPI } from "../../../serverLink";
+
 const UpdateUser = ()=>{
     const dispatch = useDispatch();
     const resetToggle = useSelector((store)=>store.status.userCross);
@@ -20,9 +22,10 @@ const UpdateUser = ()=>{
     const SendData = (event)=>{
         event.preventDefault();
 
-        axios.put(`http://localhost:5000/api/update-user/${auth.user.id}`, {name,email,phone})
+        axios.put(`${ServerAPI}/api/update-user/${auth.user.id}`, {name,email,phone})
         .then((response)=>{
             if(response.data.success){
+                
                 setAuth({ ...auth, user:response.data.user})
                 let ls = localStorage.getItem("auth")
                 ls = JSON.parse(ls)
@@ -63,8 +66,7 @@ const UpdateUser = ()=>{
             <span className="text-gray-700" onClick={()=>dispatch(UserState(false))}><ImCross/></span>
             <h1 className="font text-gray-700 text-xl font-bold">User Details</h1>
             
-            <p className="fonts text-[0.8rem] text-gray-600">Enter the email associated with your account and we'll 
-            send an email with instructions to reset your password.</p>
+            <p className="fonts text-[0.8rem] text-gray-600">The user details have been entered and the new user details have been updated.</p>
 
 
             <form onSubmit={SendData} className="flex flex-col gap-y-4" autoComplete="off">
@@ -108,3 +110,5 @@ const UpdateUser = ()=>{
     )
 }
 export default UpdateUser;
+
+

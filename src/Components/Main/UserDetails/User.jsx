@@ -11,6 +11,7 @@ import FoodzyOne from "./FoodzyOne";
 import Orders from "./Orders";
 import FavRestaurents from "./FavRestaurents";
 import Address from "./Address";
+import Settings from "./Settings";
 
 import { toast } from 'react-toastify';
 import { useAuth } from "../../Context/auth";
@@ -23,9 +24,6 @@ import { UserState } from "../../Store/StateSlice";
 const User = ()=>{
 
     const dispatch = useDispatch();
-    //const toggle = useSelector((store)=>store.status.userCross);
-    //console.log(toggle)
-
     const [order, setOrder] = useState(true);
     const [foodzy, setFoodzy] = useState(false);
     const [favourites ,setFavourites] = useState(false);
@@ -33,14 +31,12 @@ const User = ()=>{
     const [payments, setPayments] = useState(false);
     const [settings, setSettings] = useState(false);
 
+
     const [auth,setAuth ]= useAuth();
-
     const navigate = useNavigate();
-
 
     return(
         <>
-
         {/* Update User UI Design */}
         <UpdateUser/>
         {/* End of Update User UI Design */}
@@ -49,13 +45,13 @@ const User = ()=>{
 
             <div className="flex flex-row space-x-3 sm:space-x-10 justify-start items-center px-2 lg:px-10 pb-5 border-b">
 
-                <div className="flex flex-row space-x-3 sm:space-x-10 justify-start items-center border rounded-md p-3 lg:p-5">
+                <div className="flex flex-row space-x-3 sm:space-x-10 justify-between items-center border rounded-md p-3 lg:p-5">
 
                     <div className="rounded-full shadow-lg w-24 relative">
 
-                        <span className="absolute -bottom-3 left-16 text-[1.1rem] text-[#fc036f] bg-white p-2 rounded-full border shadow-md
+                        <span className=" absolute -bottom-3 left-16 text-[1.1rem] text-[#fc036f] bg-white p-2 rounded-full border shadow-md
                             active:scale-90 ease-in-out duration-300 cursor-pointer" onClick={()=>dispatch(UserState(true))}>
-                            <p className="flex justify-center items-center"><FaUserEdit/></p>
+                            <p className="flex justify-center items-center "><FaUserEdit/></p>
                         </span>
 
                         <img src={img} alt="" className="object-cover"/>
@@ -72,7 +68,7 @@ const User = ()=>{
             </div>
 
 
-            <div className="flex flex-row space-x-5 justify-start items-start sm:p-5 usernav pb-24">
+            <div className="flex flex-row space-x-3 justify-start items-start sm:p-5 usernav pb-24">
 
                 <div className="bg-white py-6 px-5 sm:px-14 border rounded shadowA nav">
 
@@ -207,8 +203,7 @@ const User = ()=>{
                    {foodzy && <FoodzyOne/>}
                    {favourites && <FavRestaurents/>}
                    {address && <Address/>}
-                   {payments && <h1>Waiting...</h1>}
-                   {settings && <h1>Waiting...</h1>}
+                   {settings && <Settings/>}
                 </div>
                 
 

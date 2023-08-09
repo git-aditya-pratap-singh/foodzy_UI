@@ -18,19 +18,16 @@ const CurrentLocation = ()=>{
     const dispatch = useDispatch();
 
     navigator.geolocation.getCurrentPosition((position)=>{
-        //console.log(position);
-        const { latitude, longitude } = position.coords;
         
+        const { latitude, longitude } = position.coords;
         setLocation({ latitude, longitude });
         
     })
 
     return(
         <>
-        
         <section className="max-w-[400px] h-screen bg-white p-8 py-10 flex flex-col justify-start items-end space-y-4 rounded-md borderA"> 
             
-
            <input type="search" placeholder="Search for area, street name.." className="w-full rounded border p-2 px-4 outline-none"/>
            
            {/* Get Current Location */}

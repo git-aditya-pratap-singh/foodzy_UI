@@ -6,6 +6,11 @@
     body{
         background: rgb(250, 250, 250);
     }
+    
+    /* header blur effect*/
+    .head{
+        backdrop-filter: blur(20px);
+    }
 
     /* about, offer and contact banner*/
     .hero_section{
@@ -96,6 +101,10 @@
         color:#fc036f;
         font-size : 0.8rem;
         font-family: 'Signika', sans-serif;
+    }
+
+    .scrollhide::-webkit-scrollbar{
+        display: none;
     }
 
 }

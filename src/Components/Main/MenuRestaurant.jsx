@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { useParams } from "react-router-dom";
 import { FaStar } from "react-icons/fa";
 import { SlHeart } from "react-icons/sl";
@@ -14,34 +14,56 @@ import Lazymenu from "../LazyItem/Lazymenu";
 import offerImg from "../../assets/offer.png";
 import fssai from "../../assets/fssai.jpg";
 import nonveg from "../../assets/nonveg.png";
-import res from "../../assets/og.jpeg";
-
 import Footer from "../Footer/Footer";
-
-// Import Swiper React components
-import { Swiper, SwiperSlide } from "swiper/react";
-
-// Import Swiper styles
-import "swiper/css";
-import "swiper/css/scrollbar";
-
-//import "./styles.css";
-
-// import required modules
-import { Scrollbar } from "swiper";
-
+import { BsArrowRightShort, BsArrowLeftShort } from "react-icons/bs";
 import { useDispatch } from "react-redux";
 import { addItem } from "../Store/CartSlice";
-
-import { toast } from 'react-hot-toast';
+import { toast } from 'react-toastify';
+import axios from "axios";
+import { useAuth } from "../Context/auth";
+import {ServerAPI} from '../../serverLink';
 
 
 const MenuRestaurant = ()=>{
+
+    const [auth,setAuth ]= useAuth();  
   
     const resId = useParams();  // resId = {id:15558}
     const { id } = resId;
     const resMenu = useRestaurantMenu(id);  // call custom components
-    
+
+    {/* Favoriate restaurents logic */}
+    const SendFav = (favData)=>{
+       console.log(favData);
+
+       axios.post(`${ServerAPI}/api/favRestaurent/${auth.user.email}`, {favData})
+       .then((response)=>{
+        if(response.data.success){
+           toast.success(response.data.message);
+        }
+        else{
+          toast.error(response.data.message);
+        }
+       })
+       .catch((err)=>{
+        console.log(err);
+       })
+      
+    }
+
+
+
+    const scrollData = document.querySelector('.scrollbeta');
+
+        const ForwardScoll = ()=>{
+            scrollData.scrollLeft += 200;
+        }
+
+        const BackwardScoll = ()=>{
+            scrollData.scrollLeft -= 200;
+        }
+
+
 
     
     return !resMenu ? (<Lazymenu/>) :(
@@ -52,11 +74,11 @@ const MenuRestaurant = ()=>{
           <span className="flex justify-between items-center">
 
             <h1 className="fonts text-[0.7rem] text-gray-500">
-              Home / {resMenu.cards[0].card.card.info.city} / {resMenu.cards[0].card.card.info.name}
+              Home / {resMenu?.cards[0]?.card?.card?.info?.city} / {resMenu?.cards[0]?.card?.card?.info?.name}
             </h1>
 
-            <span className="flex items-center space-x-6 text-xl">
-              <SlHeart className="text-[1rem]"/>
+            <span className="flex justify-center items-center space-x-6 text-xl">
+              <SlHeart className="text-[1rem]" onClick={()=>SendFav(resMenu?.cards[0]?.card?.card?.info)}/>
               <BiSearch />
             </span>
             
@@ -125,7 +147,7 @@ const MenuRestaurant = ()=>{
                 fill="#3E4152"
               ></path>
               </svg>
-              <span className="font text-[0.8rem]">29 MINS</span>
+              <span className="font text-[0.8rem]">26 MINS</span>
             </div>
 
             <div className="flex items-center gap-2 font-semibold">
@@ -159,36 +181,39 @@ const MenuRestaurant = ()=>{
 
 
           {/* Offers Section */}
-          <div className="max-w-[1000px] mx-auto lg:mx-0 flex flex-row items-center py-5">
-          <Swiper
-              spaceBetween={30}
-              slidesPerView={4}
-              centeredSlides={false}
-              scrollbar={{
-                hide: true,
-              }}
-              modules={[Scrollbar]}
-              className="mySwiper"
-          >
-            {
+
+          <div className="flex justify-end items-center w-full">
+            
+            <span className="flex justify-between items-center w-full -mb-2">
+
+                <button className="bg-gray-200 rounded-full p-1 text-2xl shadow-lg active:scale-90 ease-in-out duration-300" onClick={BackwardScoll}>
+                    <BsArrowLeftShort/></button>
+                <button className="bg-gray-200 rounded-full p-1 text-2xl shadow-lg active:scale-90 ease-in-out duration-300 scrollbt" onClick={ForwardScoll}>
+                    <BsArrowRightShort/></button>
+
+            </span>
+        </div>
+
+          <div className="snap-x flex gap-x-8 snap-mandatory mx-auto overflow-x-scroll w-full 
+          flex-shrink-0 scroll scroll-smooth scrollhide scrollbeta py-3">
+          {
               (resMenu.cards[1].card.card.gridElements.infoWithStyle.offers).map((item,index)=>{
                 return(
                   <>
-                  <SwiperSlide>
                     <PriceCard
                       header = {item?.info?.header}
                       couponCode = {item?.info?.couponCode}
                       description = {item?.info?.description}
-                      offerTag = {item?.info?.offerTag}
-                    /> 
-                  </SwiperSlide>  
+                      offerTag = {item?.info?.offerType}
+                    />                
                   </>
                 )
               })
              }
-             </Swiper>
+
           </div>
-          {/* End of Offers Section */}
+
+           {/* End of Offers Section */}
 
 
           <h1 className="w-full h-[0.1rem] bg-gray-200"></h1>
@@ -244,11 +269,12 @@ const MenuRestaurant = ()=>{
 const PriceCard = (props)=>{
   return(
     <>
+    <div className="snap-start flex-shrink-0 space-x-8 flex items-center justify-center">
       <div className="flex flex-row items-center p-3 border rounded-md shadow-md w-[220px]">
         {/* Offertags */}
         <div className="-rotate-90 py-2 border-b">
           <h1 className="fonts text-[0.6rem] text-red-500">
-          {!props.offerTag ? "WELCOME" : props.offerTag }
+          {!props.offerType ? "WELCOME" : props.offerType }
           </h1>
         </div>
 
@@ -266,7 +292,8 @@ const PriceCard = (props)=>{
         </div>
         {/* End of Offer_header */}
 
-      </div>     
+      </div>   
+      </div>  
     </>
   )
 }

@@ -3,29 +3,26 @@ import { BsXSquare } from "react-icons/bs";
 import ad from "../../assets/46678.jpg";
 import axios from "axios";
 import { toast } from 'react-toastify';
-
 import { useDispatch } from "react-redux";
 import { CheckState } from "../Store/StateSlice";
-
+import { ServerAPI } from "../../serverLink";
 import { useAuth } from "../Context/auth";
 
 const ChangeAddress = ({value})=>{
 
     const dispatch = useDispatch();
-
     const [auth,setAuth ]= useAuth();
     
-   
     const [address,setAddress]= useState('');
     const [flatno,setFlatno]= useState('');
     const [landmark,setLandmark]= useState('');
 
-   
 
     const handleSubmit =(event)=>{
         event.preventDefault();
         
-        axios.put(`http://localhost:5000/api/change-address/${auth.user.id}`, {address, flatno, landmark})
+        axios.put(`${ServerAPI}/api/change-address/${auth.user.id}`, {address, flatno, landmark})
+        
         .then((response)=>{
 
             if(response.data.success){
@@ -59,7 +56,6 @@ const ChangeAddress = ({value})=>{
     return(
         <>
         <section className={`max-w-[400px] h-screen bg-white p-8 py-10 flex flex-col justify-start items-start space-y-4 rounded-md shadow-2xl`}>
-        
 
         <span className="flex justify-between items-center w-full">
           <h1 className="font text-gray-700 border-b py-2">Save Delivery Address</h1>

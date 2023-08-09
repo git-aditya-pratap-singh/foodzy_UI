@@ -1,11 +1,12 @@
 import React from "react";
 import logo from "../../assets/logo.png";
 import { BsSend,BsFacebook,BsGithub,BsYoutube,BsLinkedin } from "react-icons/bs";
+import {Link} from "react-router-dom";
 
 const Footer = ()=>{
     return(
         <>
-        <section className="bg-red-100 p-8 md:p-16">
+        <section className="bg-red-100 p-8 md:p-16 select-none">
 
             {/* section main - 1 */}
 
@@ -43,8 +44,8 @@ const Footer = ()=>{
                        <p className="text-gray-500 font-thin">India</p>
                     </div>
 
-                    <p className="fonts">Phone: +918433399250</p>
-                    <p className="fonts">Email: singhadityapratap272@gmail.com</p>
+                    <p className="fonts">Phone: +91 5845-89624</p>
+                    <p className="fonts">Email: foodzyfoods1k@yahoo.com</p>
 
                 </div>
 
@@ -56,7 +57,7 @@ const Footer = ()=>{
                     <div className="flex border-2 p-1 border-gray-700 rounded-md">
                         <input type="email" placeholder="Enter your email" 
                           className="bg-transparent p-1 outline-none fonts"/>
-                        <button className="bg-[#df2020] rounded-md shadow-lg px-5 text-white hover:bg-cyan-500"><BsSend/></button>
+                        <button className="bg-[#fc036f] rounded-md shadow-lg px-5 text-white"><BsSend/></button>
                     </div>
                    
 
@@ -69,14 +70,14 @@ const Footer = ()=>{
             {/* section main - 2 */}
 
             <div className="flex flex-col md:flex-row gap-7 justify-between lg:px-20 items-start pt-10">
-                 <p className="fonts text-[0.8rem] text-[#df2020] ">Copyright - 2023 website made by Aditya Pratap Singh. All Rights Reserved.</p>
+                 <p className="fonts text-[0.8rem] text-[#fc036f] ">Copyright - 2023 website made by Aditya Pratap Singh. All Rights Reserved.</p>
 
                  <div className="flex flex-row gap-x-4 justify-center items-center">
                     <h1 className="fonts">Follow</h1>
-                    <h1 className="text-[#df2020] text-xl rounded-full drop-shadow-lg"><BsFacebook/></h1>
-                    <h1 className="text-[#df2020] text-xl rounded-full drop-shadow-lg"><BsGithub/></h1>
-                    <h1 className="text-[#df2020] text-xl rounded-full drop-shadow-lg"><BsYoutube/></h1>
-                    <h1 className="text-[#df2020] text-xl rounded-full drop-shadow-lg"><BsLinkedin/></h1>
+                    <h1 className="text-[#fc036f] text-xl rounded-full drop-shadow-lg"><BsFacebook/></h1>
+                    <Link to="https://github.com/git-aditya-pratap-singh"><h1 className="text-[#fc036f] text-xl rounded-full drop-shadow-lg"><BsGithub/></h1></Link>
+                    <Link to="https://www.youtube.com/@CodingHubTech"><h1 className="text-[#fc036f] text-xl rounded-full drop-shadow-lg"><BsYoutube/></h1></Link>
+                    <Link to="https://www.linkedin.com/in/theaditya-pratap-singh/"><h1 className="text-[#fc036f] text-xl rounded-full drop-shadow-lg"><BsLinkedin/></h1></Link>
                  </div>
             </div>
 

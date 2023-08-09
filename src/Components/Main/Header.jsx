@@ -24,14 +24,14 @@ const Header = ()=>{
     return(
         <> 
         {/* Current Location section */}
-        <span className={`fixed z-10 top-20 ease-in-out duration-300 ${toggle ? 'left-0' : 'left-[-600px]'}`}>
+        <span className={`fixed z-10 top-20 ease-in-out duration-500 ${toggle ? 'left-0' : 'left-[-600px]'}`}>
             <CurrentLocation/>
         </span> 
 
 
         {/* Desktop menu */}
 
-        <section className="w-full flex flex-row justify-start lg:justify-around items-center gap-x-5 p-4 bg-white drop-shadow-md fixed
+        <section className="w-full flex flex-row justify-start lg:justify-between lg:px-14 items-center gap-x-5 p-4 bg-[rgb(22 22 23/50%)] head drop-shadow-md fixed
         select-none z-10 ">
 
             <div className="flex gap-x-5 lg:gap-x-10 items-center">

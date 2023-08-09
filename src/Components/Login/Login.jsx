@@ -1,29 +1,36 @@
 import React, {useState} from "react";
 import ForgetPassword from "./ForgetPassword";
 import ResetPassword from "./ResetPassword";
-
-
-
 import {NavLink} from "react-router-dom";
-
 import login2 from "../../assets/log.png";
-
 import { GrMail } from "react-icons/gr";
 import { FaLock, FaLinkedin } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
-
 import { toast } from 'react-toastify';
 import {useNavigate,useLocation} from 'react-router-dom';
 import axios from "axios";
 import { useAuth } from "../Context/auth";
-
+import { ServerAPI } from "../../serverLink";
 // Redux- Toolkit---------
 import {useDispatch} from "react-redux";
 import { ForgetState } from "../Store/StateSlice";
 
+/* Import Aos Libraray for Move the content */
+import Aos from "aos";
+import "aos/dist/aos.css";
 
 const Login = ()=>{
+    
+    React.useEffect(()=>{
+    Aos.init({offset: 200,
+        duration: 600,
+        easing: 'ease-in-out',
+        once:true,
+        delay: 100});
+    },[])
+
+
     
     // LOGIN DATA
     const [loginData, setLoginData] = useState({
@@ -37,26 +44,21 @@ const Login = ()=>{
     // Reset Password State------
     const dispatch = useDispatch();
 
-
     const navigate = useNavigate();
     const [auth,setAuth ]= useAuth();
     const location = useLocation();
-
 
     const handleChange = (event)=>{
         const {name, value} = event.target;
         setLoginData({...loginData, [name]: value})
     }
  
-
-
     const handleSubmit = (event)=>{
         event.preventDefault();
 
         // Form validation logic
         const validateForm = () => {
             const errors = {};
-
 
             // Validate email field
             if (!loginData.email.match(/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/)) {
@@ -65,7 +67,6 @@ const Login = ()=>{
 
         return errors;
         };
-
 
         // Perform form validation
         const validationErrors = validateForm();
@@ -80,12 +81,9 @@ const Login = ()=>{
             setErrors(validationErrors);
 
             // Data send from client to server
-            axios.post("http://localhost:5000/api/login", loginData)
+            axios.post(`${ServerAPI}/api/login`, loginData)
             .then((response)=> {
-              
                 if(response.data.success){
-
-                    //console.log(response.data);
                     toast.success(`${response.data.message}`);
                     setAuth({
                         ...auth,
@@ -95,36 +93,29 @@ const Login = ()=>{
 
                       localStorage.setItem('auth',JSON.stringify(response.data))
 
-                      navigate( location.state || '/dashboard')
-                      
+                      navigate( location.state || '/dashboard')  
                 }
-
                 else{
                     toast.error(response.data.message);
                 }
-
             })
-
             .catch((err)=>{
                 console.log(err);
             });
-
         }
-
     }
-
 
     return(
         <>
-        <section className="flex flex-col lg:flex-row h-screen bg-white ">
+        <section className="flex flex-col lg:flex-row h-screen bg-white overflow-x-hidden">
 
-            <div className="basis-1/2 flex justify-center items-center h-full w-full relative">
+            <div className="basis-1/2 flex justify-center items-center h-full w-full relative" data-aos="fade-right">
 
-            <div className="clip h-full w-full absolute"></div>
-              <img src={login2} alt="image doesn't load..." className="w-[500px] z-10"/>
+                <div className="clip h-full w-full absolute"></div>
+                <img src={login2} alt="image doesn't load..." className="w-[500px] z-10" />
             </div>
             
-            <div className="basis-1/2 flex justify-center items-center bg-white py-8">
+            <div className="basis-1/2 flex justify-center items-center bg-white py-8" data-aos="fade-left">
 
                 <div className="w-80 lg:w-96 p-2 flex flex-col space-y-10 ">
 
@@ -191,18 +182,10 @@ const Login = ()=>{
                         <h1 className="p-2 rounded-full text-2xl border shadow-md "><FcGoogle/></h1>
                         <h1 className="p-2 rounded-full text-2xl border shadow-md text-slate-800"><FaGithub/></h1>
                         <h2 className="p-2 rounded-full text-2xl border shadow-md text-blue-600"><FaLinkedin/></h2>
-                    </div>
-                    
-                   
-                    
-                    
+                    </div>   
                 </div>
             </div>
-
             <ForgetPassword/>
-
-            <ResetPassword/>
-
         </section>
         </>
     )

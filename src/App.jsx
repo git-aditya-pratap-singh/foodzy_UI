@@ -15,6 +15,7 @@ import MenuRestaurant from './Components/Main/MenuRestaurant';
 import Header from './Components/Main/Header';
 import Search from './Components/Main/Search';
 import User from './Components/Main/UserDetails/User';
+import Help from './Components/Main/Help';
 
 import Orders from "./Components/Main/UserDetails/Orders";
 import PageNotFound from "./Components/Main/PageNotFound";
@@ -33,8 +34,7 @@ import ResetPassword from './Components/Login/ResetPassword';
 
 const App = ()=>{
   const [auth]= useAuth();
-  console.log(auth);
-  //const navigate = useNavigate();
+  
     return(
       <> 
       <Toaster />
@@ -62,15 +62,17 @@ const App = ()=>{
           
           <Route path="/login" element={!auth.token ? <Login/> : <Navigate to="/dashboard"/>}/>
           <Route path="/signup" element={<Signup/>}/>
+          <Route path="/resetpassword/:id" element={<ResetPassword/>}/>
           
          
           <Route path="/dashboard" element={auth.token ? <Header/> : <Navigate to="/login"/>}>
             {/* Route index element={<Dashboard/>} */}
             <Route index element={<Dashboard/>}/>
             <Route path="/dashboard/Restaurant/Menu/:id" element={<MenuRestaurant/>}/>
-            <Route path="/dashboard/cart" element={<Cart/>}/>
             <Route path="/dashboard/search" element={<Search/>}/>
+            <Route path="/dashboard/help" element={<Help/>}/>
             <Route path="/dashboard/user" element={<User/>}/>
+            <Route path="/dashboard/cart" element={<Cart/>}/>
           </Route>
          
 

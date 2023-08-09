@@ -2,17 +2,13 @@ import React, {useContext} from "react";
 
 // import userContext variable name;
 import { userContext } from "./Offers";
-
 import {IMG_CDN } from "../../Config";
 import { FaStar } from "react-icons/fa";
 import offerImg from "../../assets/offer.png";
 
-
 const Itemcard =()=>{
-
     // here, store a data into userContext from provides/transfer data to props variable.
     const props = useContext(userContext);
-
 
     return(
         <>
@@ -41,21 +37,19 @@ const Itemcard =()=>{
                 </div>
                 
                 <div className="w-[3px] h-[3px] rounded-full bg-black"></div>
-                <span className="fonts text-[0.7rem] text-gray-500">{props.slaString}</span>
+                <span className="fonts text-[0.7rem] text-gray-500">{props.sla.slaString}</span>
 
                 <div className="w-[3px] h-[3px] rounded-full bg-black"></div>
-                <span className="fonts text-[0.7rem] text-gray-500">{props.costForTwoString}</span>
+                <span className="fonts text-[0.7rem] text-gray-500">{props.costForTwo}</span>
 
             </div>
-
-
 
             <div className="flex border-t pt-4 gap-2 font-semibold items-center fonts text-[0.8rem]">
                     <img src={offerImg} alt="" className="h-4" />
                     <span className="text-[#a0522d]">
-                    {!props.aggregatedDiscountInfo?.shortDescriptionList[0]?.meta
+                    {!props.aggregatedDiscountInfoV3?.header
                     ? "40% off | Use TRYNEW"
-                    : props.aggregatedDiscountInfo?.shortDescriptionList[0]?.meta}
+                    : (`${props.aggregatedDiscountInfoV3?.header+" | " +props.aggregatedDiscountInfoV3?.subHeader}`)}
                     </span>
             </div> 
 
