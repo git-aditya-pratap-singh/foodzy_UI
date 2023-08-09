@@ -1,7 +1,6 @@
 
 import React, { useState, useEffect } from "react";
-//import {Link} from 'react-scroll';            // import smooth scrolling
-import {NavLink, Outlet} from "react-router-dom";    //
+import {NavLink, Outlet} from "react-router-dom";    
 import Hamburger from 'hamburger-react';     // import Hamburger menu
 
 /* Import Aos Libraray for Move the content */
@@ -19,8 +18,6 @@ import { RxDoubleArrowUp } from "react-icons/rx";
 /* Import Logo and CSS file */
 import logo from "../../assets/logo.png";
 import "./nav.css";
-
-
 
 const Navbar = () =>{
 
@@ -62,7 +59,6 @@ const Navbar = () =>{
 
     window.addEventListener('scroll',scrollTo);
     // #########################################################
-    
 
 
     useEffect(()=>{

@@ -7,16 +7,14 @@ const StateSlice = createSlice({
     initialState : {
         data : false,
         forgetCross : false,
-        resetCross : false,
-        userCross : false
+        userCross : false,
+        paymentCross : false
     },
     reducers : {
         
         // Change Edit Address function-----
         CheckState : (state, action)=>{
-          //console.log(action.payload);
           state.data = action.payload;
-          
         },
 
         // To check forget Password cross(x) state (true or false)
@@ -24,17 +22,16 @@ const StateSlice = createSlice({
             state.forgetCross = action.payload;
         },
 
-        // To check reset password cross(x) state (true or false)
-        ResetState : (state, action)=>{
-            state.resetCross = action.payload;
-        },
-
         //To Check User Update Details cross(x) state (true or false)
         UserState : (state, action)=>{
             state.userCross = action.payload;
-        }
+        },
 
+        //To Check Payment (pay now) option State (true or false)
+        PaymentState : (state, action)=>{
+            state.paymentCross = action.payload;
+        }
     }
 })
 export default StateSlice;
-export const {CheckState, ForgetState, ResetState, UserState} = StateSlice.actions;
+export const {CheckState, ForgetState, ResetState, UserState, PaymentState} = StateSlice.actions;

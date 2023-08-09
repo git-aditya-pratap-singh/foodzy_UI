@@ -6,7 +6,7 @@ import foodzyone from "../../../assets/foodzyone.png";
 const FoodzyOne = ()=>{
     return(
         <>
-        <section className="flex flex-wrap justify-center lg:justify-between items-center gap-3 p-3 lg:p-10">
+        <section className="flex flex-wrap justify-center lg:justify-between items-center gap-3 p-3 py-5 lg:py-0 lg:px-10">
 
             <div className="flex flex-col items-start gap-y-5">
 

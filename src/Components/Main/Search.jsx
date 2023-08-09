@@ -22,10 +22,11 @@ const Search = ()=>{
     const [searchText, setSearchText] = useState("");
 
     const data = useRestaurant();
-    
+   
+
     const FilterData = (searchText, allrestaurant)=>{
         return (allrestaurant.filter((restaurent)=>{
-            return restaurent?.data?.name.toLowerCase()?.includes(searchText.toLowerCase())
+            return restaurent?.info?.name.toLowerCase()?.includes(searchText.toLowerCase())
         }))
     
     }
@@ -66,8 +67,8 @@ const Search = ()=>{
                 <section className="border rounded-md p-2 grid grid-cols-1 lg:grid-cols-2 gap-4 content-center place-items-center">
                     {
                        filterResult.map((item,index)=>{
-                        return <NavLink to={'/dashboard/Restaurant/Menu/' + item.data.id} key={item?.data?.id}>
-                            <SearchCard {...item.data}/>
+                        return <NavLink to={'/dashboard/Restaurant/Menu/' + item?.info?.id} key={item?.info?.id}>
+                            <SearchCard {...item.info}/>
                         </NavLink>
                        })    
                     }
@@ -84,8 +85,8 @@ const Search = ()=>{
 
 
 
-const SearchCard = ({cloudinaryImageId, name, avgRating, slaString, costForTwoString, cuisines})=>{
-    //console.log(props);
+const SearchCard = ({cloudinaryImageId, name, avgRating, sla, costForTwo, cuisines})=>{
+    
     return(
         <>
         <section className="p-2 lg:p-4 flex flex-row gap-x-3 justify-center items-center border rounded-md bg-slate-100 max-w-[380px]">
@@ -112,10 +113,10 @@ const SearchCard = ({cloudinaryImageId, name, avgRating, slaString, costForTwoSt
                     </div>
             
                     <div className="w-[3px] h-[3px] rounded-full bg-black"></div>
-                    <span className="fonts text-[0.7rem] text-gray-500">{slaString}</span>
+                    <span className="fonts text-[0.7rem] text-gray-500">{sla.slaString}</span>
 
                     <div className="w-[3px] h-[3px] rounded-full bg-black"></div>
-                    <span className="fonts text-[0.7rem] text-gray-500">{costForTwoString}</span>
+                    <span className="fonts text-[0.7rem] text-gray-500">{costForTwo}</span>
 
                 </div>
 

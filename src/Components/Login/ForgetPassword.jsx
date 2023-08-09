@@ -2,16 +2,14 @@ import React,{useState} from "react";
 import { GrMail } from "react-icons/gr";
 import { ImCross } from "react-icons/im";
 import resetimg from "../../assets/reset.jpg";
-
 import axios from "axios";
 import { toast } from 'react-toastify';
-
+import { ServerAPI } from "../../serverLink";
 import { useSelector, useDispatch } from "react-redux";
 import { ForgetState, ResetState } from "../Store/StateSlice";
 
 
 const ForgetPassword = ()=>{
-
     const dispatch = useDispatch();
     const resetToggle = useSelector((store)=>store.status.forgetCross);
 
@@ -27,39 +25,31 @@ const ForgetPassword = ()=>{
 
     const Sendemail = (event)=>{
         event.preventDefault();
-
+    
         try{
-            axios.post("http://localhost:5000/api/forget-password", emailField)
+            axios.post(`${ServerAPI}/api/forget-password`, emailField)
             
             .then((response)=>{
                 if(response.data.success){
                     toast.success(`${response.data.message}`);
-
                     dispatch(ForgetState(false));
-
                     dispatch(ResetState(true));
-
                 }
                 else{
                     toast.error(`${response.data.message}`);
                 }
-
                 //reset form Details (emails)
                 setEmailField({
                     email : ""
-                })
-                
+                }) 
             })
-            
             .catch((err)=>{
                 console.log(err);
             })
         }
-
         catch(err){
             console.log(err);
-        }
-      
+        }   
     }
 
     return(
@@ -77,7 +67,7 @@ const ForgetPassword = ()=>{
             send an email with instructions to reset your password.</p>
 
 
-            <form onSubmit={Sendemail} className="flex flex-col gap-y-4" autoComplete="on">
+            <form onSubmit={Sendemail} className="flex flex-col gap-y-4" autoComplete="off">
 
                 <div className="flex flex-row gap-x-2 justify-start items-center bg-white px-3 fonts border rounded-md">
 

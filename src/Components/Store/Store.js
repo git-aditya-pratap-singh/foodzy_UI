@@ -1,9 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
-
 import CartSlice from "./CartSlice";
-
 import StateSlice from "./StateSlice";
-
 import LocationSlice from "./LocationSlice";
 
 const store = configureStore({

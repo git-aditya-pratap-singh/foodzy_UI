@@ -1,10 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit";
-
 const LocationSlice = createSlice({
     name : "find_out_location",
-
     initialState : {
-
         findlocation : {
             latitude : 28.6139, 
             longitude : 77.2090
@@ -13,10 +10,7 @@ const LocationSlice = createSlice({
 
     reducers : {
         FindLocation : (state, action)=>{
-
-            state.findlocation = action.payload;
-            //console.log("jjj",state.findlocation);
-            
+            state.findlocation = action.payload;   
         }
     }
 })

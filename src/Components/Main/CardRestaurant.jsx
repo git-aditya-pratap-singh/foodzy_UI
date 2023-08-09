@@ -7,15 +7,13 @@ import offerImg from "../../assets/offer.png";
 import { userContextdata } from "./Dashboard";
 import useRestaurantMenu from "../Custom/useRestaurantMenu";
 
-
 const CardRestaurant = ()=>{
-
     // here, store a data into userContextdata from provides/transfer data to props variable.
     const props = useContext(userContextdata);
 
     return(
         <>
-        <section className="flex flex-col gap-y-2 p-4 rounded-md border w-[20rem] sm:w-[16rem] hover:shadow-md">
+        <section className="flex flex-col gap-y-2 p-4 rounded-md border w-[19rem] sm:w-[16rem] hover:shadow-md">
         
             <div className="overflow-hidden rounded-md">
             
@@ -35,15 +33,15 @@ const CardRestaurant = ()=>{
 
             <div className="flex justify-between items-center my-2 font-medium">
                 <div className="flex items-center gap-1 px-1 text-white bg-green-500  font-semibold">
-                    <h1 className="text-[0.6rem]"><FaStar/></h1>
-                    <h1 className="text-[0.6rem]">{props.avgRating === '--' ? "4.2" : props.avgRating}</h1>
+                    <h1 className="text-[0.7rem]"><FaStar/></h1>
+                    <h1 className="text-[0.7rem]">{props.avgRating === '--' ? "4.2" : props.avgRating}</h1>
                 </div>
             
                 <div className="w-[3px] h-[3px] rounded-full bg-black"></div>
-                <span className="fonts text-[0.7rem] text-gray-500">{props.slaString}</span>
+                <span className="fonts text-[0.8rem] text-gray-500">{props.sla.slaString}</span>
 
                 <div className="w-[3px] h-[3px] rounded-full bg-black"></div>
-                <span className="fonts text-[0.7rem] text-gray-500">{props.costForTwoString}</span>
+                <span className="fonts text-[0.8rem] text-gray-500">{props.costForTwo}</span>
 
             </div>
 
@@ -51,9 +49,9 @@ const CardRestaurant = ()=>{
             <div className="flex border-t pt-4 gap-2 font-semibold items-center fonts text-[0.8rem]">
                 <img src={offerImg} alt="" className="h-4" />
                 <span className="text-[#a0522d]">
-                    {!props.aggregatedDiscountInfo?.shortDescriptionList[0]?.meta
+                    {!props.aggregatedDiscountInfoV3?.header
                     ? "40% off | Use TRYNEW"
-                    : props.aggregatedDiscountInfo?.shortDescriptionList[0]?.meta}
+                    : (`${props.aggregatedDiscountInfoV3?.header+" | " +props.aggregatedDiscountInfoV3?.subHeader}`)}
                 </span>
             </div> 
 

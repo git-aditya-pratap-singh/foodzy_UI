@@ -1,30 +1,25 @@
 import React,{useState} from "react";
 import axios from "axios";
-import { toast } from 'react-toastify';
-
-import { FaHome,FaMapMarkerAlt } from "react-icons/fa";
-import { GiWallet } from "react-icons/gi";
-import og from "../../assets/og.jpeg";
+import {IMG_CDN } from "../../Config";
+import logo from "../../assets/payment-logo.png";
 import fssai from "../../assets/fssai.jpg"
 import nonveg from "../../assets/nonveg.png";
-
-
+import paymentimg from "../../assets/Payment.svg";
+import { toast } from 'react-toastify';
+import { FaHome,FaMapMarkerAlt,FaRupeeSign } from "react-icons/fa";
+import { GiWallet } from "react-icons/gi";
+import {useNavigate} from 'react-router-dom';
 import EmptyCart from "./EmptyCart";
 import ChangeAddress from "./ChangeAddress";
-
-import {IMG_CDN } from "../../Config";
-
 import { useSelector, useDispatch } from "react-redux";
 import { increaseCount, decreaseCount, removeItem } from "../Store/CartSlice";
-import { CheckState } from "../Store/StateSlice";
-
+import { CheckState, PaymentState } from "../Store/StateSlice";
 import {useAuth} from "../Context/auth";
-
+import { ServerAPI } from "../../serverLink";
 
 const Cart = ()=>{
 
     const [auth, setAuth] = useAuth();
-    
 
     // fetch data from store
     const foodsItem = useSelector((store)=>store.items.data);
@@ -33,53 +28,63 @@ const Cart = ()=>{
 
     // check the (edit address) hooks status
     const toggle = useSelector((store)=>store.status.data);
+
+    // check the payment Status
+    const payment = useSelector((store)=>store.status.paymentCross);
+
+    const navigate = useNavigate();
+
+    const [loading, setLoading] = useState(payment);
     
+
     var totalamt = 0;
     var GST = 16;
     var Delivery = 24;
-    //var paynow = 0;
 
     //--------------------- SEND ORDERS -----------------------
 
-    const initPayment = (data) => {
 
-        
-		
-	};
-
-    const SentOrders = (event)=>{
-        
+    const SentOrders = async(event)=>{
+        event.preventDefault();
 
         try{
-           axios.post("http://localhost:5000/api/payment-checkout", {totalamt, GST, Delivery})
+           await axios.post(`${ServerAPI}/api/payment-checkout`, {totalamt, GST, Delivery})
+           
             .then((response)=>{
                 if(response.data.success){
-                    console.log(response.data);
-                    toast.success(`${response.data.message}`);
+
                     const options = {
 
                         key: "rzp_test_t413fd9XoEErIr",
-                        amount: response.data.amount,
-                        currency: response.data.currency,
+                        amount: response.data.data.amount,
+                        currency: response.data.data.currency,
                         name: "Foodzy",
-                        description: "Test Transaction",
-                        image: "",
-                        order_id: response.data.id,
+                        description: "Foodzy Transaction",
+                        image: logo,
+                        order_id: response.data.data.id,
                         handler: async (response) => {
-                            try {
-                                if(response.data.success){
-                                    toast.success(`${response.data.message}`);
+                
+                            await axios.post(`${ServerAPI}/api/paymentverification/${auth?.user?.email}`, {response, foodsItem, totalamt, GST, Delivery})   
+                            
+                            .then((res)=>{
+                                if(res.data.success){
+                                    toast.success(res.data.message);
+                                    dispatch(PaymentState(false))
+                                    navigate('../user')
                                 }
-                            } catch (error) {
-                                console.log("Ab2");
-                                console.log(error);
+                                else{
+                                    toast.error(res.data.message);
+                                }
+                            })
+                            .catch((err)=>{
+                                console.log(err);
+                            })
                                 
-                            }
                         },
                         prefill: {
-							contact: "8433399250",
-							name: "Aditya Singh",
-							email: "aps08072001@gmail.com"
+							contact: auth.user.phone,
+							name: auth.user.name,
+							email: auth.user.email
 						},
 						notes : {
 							description:"hello"
@@ -90,10 +95,9 @@ const Cart = ()=>{
                     };
                     const rzp1 = new window.Razorpay(options);
                     rzp1.on('payment.failed', function (response){
-                        alert("Payment Failed");
+                        toast.error("Payment Failed");
                 });
-                    rzp1.open();
-                    event.preventDefault();
+                    rzp1.open();  
                     
                 }
                 else{
@@ -105,8 +109,7 @@ const Cart = ()=>{
         catch(err){
             console.log(err);
         }
-        
-        
+         
     }
 
     return !foodsItem.length ? (<EmptyCart/>) : (
@@ -153,7 +156,8 @@ const Cart = ()=>{
 
                             <h3 className="fonts text-[0.9rem]">34 MINS</h3>
                             <button className="bg-[#60b246] p-2 rounded shadow w-36 text-white 
-                            font-bold active:scale-90 duration-200 outline-none" onClick={SentOrders}>DELIVER HERE</button>
+                            font-bold active:scale-90 ease-linear duration-100 outline-none" 
+                            onClick={()=>dispatch(PaymentState(true))}>DELIVER HERE</button>
 
                         </span>
 
@@ -168,7 +172,7 @@ const Cart = ()=>{
                             </p>
                             
                             <button className="mb-36 p-2 border rounded shadow w-36 text-[#60b246]  
-                            font-bold active:scale-90 duration-200 outline-none"
+                            font-bold active:scale-90 ease-linear duration-100 outline-none"
                             onClick={
                                 ()=>dispatch(CheckState(true))
                             }
@@ -182,12 +186,34 @@ const Cart = ()=>{
                 
                
             </div>
+            
 
+            {/* Payment */}
             <div className="flex flex-col justify-start p-10 pb-15 border rounded-md bg-white shadow-xl relative">
                 <span className="p-2 bg-white border rounded shadow-md absolute -top-5 sm:top-8 -left-0 sm:-left-5 text-[#fc036f] text-2xl">
                     <GiWallet/>
                 </span>
                 <h1 className="font text-gray-500">Payment</h1>
+
+               
+
+                
+                
+                <section className={`${payment ? "block" : "hidden"}`}>
+
+                    <div className="flex justify-center items-center object-cover">
+                        <img src={paymentimg} alt="Image doesn't load..." className="w-96  "/>
+                    </div>
+                
+                    <div className="flex justify-end items-center">
+
+                    <button className="flex justify-center items-center gap-x-2 p-2 w-32 rounded outline-none bg-[#fc036f] text-white text-[0.9rem] font drop-shadow-xl
+                        active:scale-90 ease-linear duration-100" onClick={SentOrders}><FaRupeeSign/> Pay now</button>
+                
+                    </div>
+                </section>
+                
+                
             </div>
 
 

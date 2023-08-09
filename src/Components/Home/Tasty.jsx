@@ -18,8 +18,6 @@ const Tasty = ()=>{
             With a variety of options available, from gourmet to fast food, you can satisfy your cravings with just a few clicks. 
            </p>
 
-
-           
            <div className="space-y-2">
               <span className="flex items-center space-x-2">
                 <AiOutlineCheckCircle className="text-red-500"/>
