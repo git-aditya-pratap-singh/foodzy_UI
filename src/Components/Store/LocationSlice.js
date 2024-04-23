@@ -3,8 +3,8 @@ const LocationSlice = createSlice({
     name : "find_out_location",
     initialState : {
         findlocation : {
-            latitude : 28.6139, 
-            longitude : 77.2090
+            latitude : 13.042155, 
+            longitude : 77.568379
         } 
     },
 
