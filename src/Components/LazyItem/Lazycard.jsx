@@ -16,7 +16,6 @@ const Lazycard = ()=>{
           <ShimmerCard />
           <ShimmerCard />
           <ShimmerCard />
-    
         </div>
         </>
     )

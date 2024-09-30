@@ -17,7 +17,7 @@ const CardRestaurant = ()=>{
         
             <div className="overflow-hidden rounded-md">
             
-                <img src={
+            <img src={
                     IMG_CDN +
                     (props.cloudinaryImageId === ""
                         ? "s6fhwzl0tss0vgrqvcid"

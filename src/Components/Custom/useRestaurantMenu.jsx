@@ -3,13 +3,15 @@ import axios from "axios";
 
 const useRestaurantMenu = (resId)=>{
     const [resMenu, setResMenu] = useState(null);
+    const API = `https://foodieco-backend-216f2650ef56.herokuapp.com/api/menu?resId=${resId}`
 
     useEffect(()=>{
         getMenu();
     },[])
 
     const getMenu = async()=> {
-        const res = await axios.get(`https://corsproxy.io/?https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=19.0759837&lng=72.8776559&restaurantId=${resId}&submitAction=ENTER`);
+        const res = await axios.get(API);
+        console.log("Aditya",res)
         setResMenu(res?.data.data)
     }
     return resMenu;

@@ -4,13 +4,9 @@ import { FaStar } from "react-icons/fa";
 import { SlHeart } from "react-icons/sl";
 import { BiSearch } from "react-icons/bi";
 import { IMG_CDN } from "../../Config";
-
 // import Custom Components
 import useRestaurantMenu from "../Custom/useRestaurantMenu";
-
-// import LazyLoading Items
 import Lazymenu from "../LazyItem/Lazymenu";
-
 import offerImg from "../../assets/offer.png";
 import fssai from "../../assets/fssai.jpg";
 import nonveg from "../../assets/nonveg.png";
@@ -27,106 +23,68 @@ import {ServerAPI} from '../../serverLink';
 const MenuRestaurant = ()=>{
 
     const [auth,setAuth ]= useAuth();  
-  
     const resId = useParams();  // resId = {id:15558}
     const { id } = resId;
     const resMenu = useRestaurantMenu(id);  // call custom components
 
     {/* Favoriate restaurents logic */}
     const SendFav = (favData)=>{
-       console.log(favData);
-
        axios.post(`${ServerAPI}/api/favRestaurent/${auth.user.email}`, {favData})
        .then((response)=>{
-        if(response.data.success){
-           toast.success(response.data.message);
-        }
-        else{
-          toast.error(response.data.message);
-        }
+        if(response.data.success)
+           toast.success(response.data.message)
+        else
+        toast.error(response.data.message);
        })
-       .catch((err)=>{
-        console.log(err);
-       })
-      
+       .catch((err)=> console.log(err))
     }
-
-
 
     const scrollData = document.querySelector('.scrollbeta');
 
-        const ForwardScoll = ()=>{
-            scrollData.scrollLeft += 200;
-        }
-
-        const BackwardScoll = ()=>{
-            scrollData.scrollLeft -= 200;
-        }
-
-
-
-    
-    return !resMenu ? (<Lazymenu/>) :(
+      const ForwardScoll = ()=>scrollData.scrollLeft += 200;
+      const BackwardScoll = ()=> scrollData.scrollLeft -= 200;
+      
+      return !resMenu ? (<Lazymenu/>) :(
         <>
         <section className="flex flex-col justify-start space-y-3 m-auto w-full sm:w-[70%] p-6 pt-28 overflow-hidden">
-          
           {/* Address_Path and heart, search icon Section */}
           <span className="flex justify-between items-center">
-
             <h1 className="fonts text-[0.7rem] text-gray-500">
-              Home / {resMenu?.cards[0]?.card?.card?.info?.city} / {resMenu?.cards[0]?.card?.card?.info?.name}
+              Home / {resMenu?.cards[2]?.card?.card?.info?.city} / {resMenu?.cards[2]?.card?.card?.info?.name}
             </h1>
-
             <span className="flex justify-center items-center space-x-6 text-xl">
-              <SlHeart className="text-[1rem]" onClick={()=>SendFav(resMenu?.cards[0]?.card?.card?.info)}/>
+              <SlHeart className="text-[1rem]" onClick={()=>SendFav(resMenu?.cards[2]?.card?.card?.info)}/>
               <BiSearch />
-            </span>
-            
+            </span>  
           </span>
+
           {/* End of Address_Path and heart, search icon Column-1 */}
-
-
-
-            {/* Restaurant name, distance and Rating section*/}
-            <div className="flex flex-row justify-between items-center">
-                
+            <div className="flex flex-row justify-between items-center">  
                 {/* Restaurant name and distance */}
                 <div className="flex flex-col space-y-1">
-                    <h1 className="font text-2xl">{resMenu.cards[0].card.card.info.name}</h1>
-                    <h2 className="fonts text-[0.8rem] text-gray-600">{resMenu?.cards[0]?.card?.card?.info?.cuisines.join(", ")}</h2>
-                    <h2 className="fonts text-[0.8rem] text-gray-600">{resMenu.cards[0].card.card.info.areaName} {", "}
-                      {resMenu?.cards[0]?.card?.card?.info?.city}{" "}</h2>
+                    <h1 className="font text-2xl">{resMenu.cards[2].card.card.info.name}</h1>
+                    <h2 className="fonts text-[0.8rem] text-gray-600">{resMenu?.cards[2]?.card?.card?.info?.cuisines.join(", ")}</h2>
+                    <h2 className="fonts text-[0.8rem] text-gray-600">{resMenu.cards[2].card.card.info.areaName} {", "}
+                      {resMenu?.cards[2]?.card?.card?.info?.city}{" "}</h2>
                 </div>
                 {/* End Restaurant name and distance */}
-
-
                 {/* Restaurant rating */}
                 <div className="flex flex-col justify-center items-center border rounded-md p-2 space-y-2">
-
                     <span className="flex items-center space-x-1">
                       <h1 className="text-[0.8rem] text-green-500"><FaStar/></h1>
-                      <h1 className="font text-[0.7rem] font-extrabold">{resMenu.cards[0].card.card.info.avgRatingString}</h1>
+                      <h1 className="font text-[0.7rem] font-extrabold">{resMenu.cards[2].card.card.info.avgRatingString}</h1>
                     </span>
-
                     <h1 className="w-full h-[0.1rem] bg-gray-200"></h1> 
-
                     <span className="flex items-center">
-                      <h1 className="font text-[0.6rem] text-gray-600">{resMenu.cards[0].card.card.info.totalRatingsString}</h1>
+                      <h1 className="font text-[0.6rem] text-gray-600">{resMenu.cards[2].card.card.info.totalRatingsString}</h1>
                     </span>
-
                 </div>
                 {/* End of Restaurant rating */}
-
             </div>
             {/* End of Restaurant name, distance and Rating section*/}
-
-
             <h1 className="w-full h-[0.1rem] bg-gray-200"></h1>
-
-
             {/* Distance and price section */}
             <div className="flex gap-8 items-center pt-3">
-
             <div className="flex items-center gap-2 font-semibold">
               <svg
                 className="RestaurantTimeCost_icon__8UdT4"
@@ -151,7 +109,6 @@ const MenuRestaurant = ()=>{
             </div>
 
             <div className="flex items-center gap-2 font-semibold">
-              
               <svg
                 className="RestaurantTimeCost_icon__8UdT4"
                 width="18"
@@ -172,32 +129,25 @@ const MenuRestaurant = ()=>{
                 fill="#3E4152"
               ></path>
               </svg>
-              <span className="font text-[0.8rem]">{resMenu?.cards[0]?.card?.card?.info?.costForTwoMessage}</span>
+              <span className="font text-[0.8rem]">{resMenu?.cards[2]?.card?.card?.info?.costForTwoMessage}</span>
             </div>
-
             </div>
-
           {/* End of Distance and price section */}
 
-
           {/* Offers Section */}
-
           <div className="flex justify-end items-center w-full">
-            
             <span className="flex justify-between items-center w-full -mb-2">
-
                 <button className="bg-gray-200 rounded-full p-1 text-2xl shadow-lg active:scale-90 ease-in-out duration-300" onClick={BackwardScoll}>
                     <BsArrowLeftShort/></button>
                 <button className="bg-gray-200 rounded-full p-1 text-2xl shadow-lg active:scale-90 ease-in-out duration-300 scrollbt" onClick={ForwardScoll}>
                     <BsArrowRightShort/></button>
-
             </span>
         </div>
 
           <div className="snap-x flex gap-x-8 snap-mandatory mx-auto overflow-x-scroll w-full 
           flex-shrink-0 scroll scroll-smooth scrollhide scrollbeta py-3">
           {
-              (resMenu.cards[1].card.card.gridElements.infoWithStyle.offers).map((item,index)=>{
+              (resMenu.cards[3].card.card.gridElements.infoWithStyle.offers).map((item,index)=>{
                 return(
                   <>
                     <PriceCard
@@ -210,31 +160,22 @@ const MenuRestaurant = ()=>{
                 )
               })
              }
-
           </div>
-
-           {/* End of Offers Section */}
-
-
+          {/* End of Offers Section */}
           <h1 className="w-full h-[0.1rem] bg-gray-200"></h1>
-
-
           {/* Recommended Section */}
           <span className="font font-bold mt-4 mb-10 text-gray-700">Recommended (
             {
-              resMenu?.cards[resMenu?.cards.length -1]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card
+              resMenu?.cards[resMenu?.cards.length -1]?.groupedCard?.cardGroupMap?.REGULAR?.cards[2]?.card
               ?.card?.itemCards?.length
             })
           </span>
           {/* End of Recommended Section */}
-
-
           {/* Foods Item Section */}
           <div className="flex flex-col items-center space-y-5 pb-20">
             {
-              (resMenu?.cards[resMenu?.cards.length -1]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card?.card?.itemCards)
+              (resMenu?.cards[resMenu?.cards.length -1]?.groupedCard?.cardGroupMap?.REGULAR?.cards[2]?.card?.card?.itemCards)
               .map((item,index)=>{
-                //console.log(item?.card?.info);
                 return(
                   <>
                     <ItemCard 
@@ -245,25 +186,22 @@ const MenuRestaurant = ()=>{
                     description = {item?.card?.info?.description}
                     imageId = {item?.card?.info?.imageId}
                     itemAttribute = {item?.card?.info?.itemAttribute?.vegClassifier}
-                    restaurantName = {resMenu?.cards[0]?.card?.card?.info.name}
-                    restaurantAddress = {resMenu?.cards[0]?.card?.card?.info.areaName}
-                    restaurantImage ={resMenu?.cards[0]?.card?.card?.info?.cloudinaryImageId}
+                    restaurantName = {resMenu?.cards[2]?.card?.card?.info.name}
+                    restaurantAddress = {resMenu?.cards[2]?.card?.card?.info.areaName}
+                    restaurantImage ={resMenu?.cards[2]?.card?.card?.info?.cloudinaryImageId}
                     payment = {(item?.card?.info?.price) ? Math.floor(item?.card?.info?.price / 100) : 150}
                     />
                   </>
                 )
               })
-         
             } 
           </div>
           {/* End of Foods Item Section */}
-          
         </section>
         <Footer/>
         </>
     )
 }
-
 
 // Offers_Card
 const PriceCard = (props)=>{
@@ -291,7 +229,6 @@ const PriceCard = (props)=>{
           </span>
         </div>
         {/* End of Offer_header */}
-
       </div>   
       </div>  
     </>
@@ -304,11 +241,9 @@ const ItemCard = (props)=>{
 
   //its a no of item(bydefault = 1)
   const count = 1;
- 
   const dispatch = useDispatch();
 
   function addItemFunc(item) {  // item = {...props, count}
-    
     dispatch(addItem(item));
     toast.success('Added Successfully!');
   }
@@ -319,11 +254,9 @@ const ItemCard = (props)=>{
       {/* flex section-1 */}
       <div className="basis-1/2 flex flex-col items-start space-y-1">
         <span className="py-1 flex items-center space-x-2">
-          {
-            props.itemAttribute === "VEG" ? (<img src={fssai} alt='' className="w-4 "/>):
+          { props.itemAttribute === "VEG" ? (<img src={fssai} alt='' className="w-4 "/>):
             (<img src={nonveg} alt='' className="w-5 "/>)
           }
-          
           {
             !props.ribbon ? "" : (
               <div className="flex items-center space-x-1">
@@ -333,7 +266,6 @@ const ItemCard = (props)=>{
             )
           }
         </span>
-
         <h1 className="fonts text-gray-700">{props.name}</h1>
         <p className="fonts text-gray-700">₹ {props.price}</p>
         <h2 className="text-[0.8rem] text-gray-400">{props.description}</h2> 
@@ -345,18 +277,13 @@ const ItemCard = (props)=>{
         <img src={
            props.imageId
            ? IMG_CDN + props.imageId
-           : "https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_508,h_320,c_fill/39cd5e4824e5c011ffaf56ddc39891e8"
+           : {}
         } 
         alt="Image doesn't load..." className="w-36 h-24 rounded self-center object-cover"/>
         <button className="absolute bottom-[-10px] bg-white shadow-md border self-center text-[13px] px-8 py-2 
         rounded text-green-500 fonts active:scale-90 transition-all duration-200 ease-in-out outline-none"
-
-        onClick={() => addItemFunc({...props, count})}
-        >
-        ADD</button>
-        
+        onClick={() => addItemFunc({...props, count})}>ADD</button>
       </div>
-
     </div>    
     </>
   )
