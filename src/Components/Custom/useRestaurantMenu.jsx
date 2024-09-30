@@ -11,7 +11,6 @@ const useRestaurantMenu = (resId)=>{
 
     const getMenu = async()=> {
         const res = await axios.get(API);
-        console.log("Aditya",res)
         setResMenu(res?.data.data)
     }
     return resMenu;

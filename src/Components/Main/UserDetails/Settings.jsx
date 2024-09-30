@@ -37,7 +37,12 @@ const Settings = ()=>{
             setErrors(validationErrors);
         else{
             setErrors(validationErrors);
-            axios.post(`${ServerAPI}/api/change-password/${auth?.user?.id}`, input)
+            const token = JSON.parse(localStorage.getItem('auth'));
+            const headers = {
+                Authorization: `Bearer ${token?.token}`, 
+                'Content-Type': 'application/json', 
+            };
+            axios.post(`${ServerAPI}/api/change-password/${auth?.user?.id}`, input, {headers})
             .then((response)=>{
                 if(response.data.success){
                     toast.success(response.data.message);

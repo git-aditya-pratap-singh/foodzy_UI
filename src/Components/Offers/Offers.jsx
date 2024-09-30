@@ -1,4 +1,5 @@
 import React, {createContext} from "react";
+import { NavLink } from "react-router-dom";
 import axios from "axios";
 import Footer from "../Footer/Footer";
 // Lazy loading components
@@ -30,7 +31,9 @@ const Offers = ()=>{
                         return(
                             <>
                                 <userContext.Provider value={{...items}}>
-                                    <Itemcard />
+                                    <NavLink to={'/Restaurant/Menu/' + items?.id} key={items?.id} {...items}>
+                                        <Itemcard /> 
+                                    </NavLink>
                                 </userContext.Provider>
                             </>
                         )

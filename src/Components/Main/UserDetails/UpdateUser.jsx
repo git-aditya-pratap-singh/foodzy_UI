@@ -17,7 +17,13 @@ const UpdateUser = ()=>{
 
     const SendData = (event)=>{
         event.preventDefault();
-        axios.put(`${ServerAPI}/api/update-user/${auth.user.id}`, {name,email,phone})
+        const token = JSON.parse(localStorage.getItem('auth'));
+        const headers = {
+            Authorization: `Bearer ${token?.token}`, 
+            'Content-Type': 'application/json', 
+        };
+
+        axios.put(`${ServerAPI}/api/update-user/${auth.user.id}`, {name,email,phone}, {headers})
         .then((response)=>{
             if(response.data.success){  
                 setAuth({ ...auth, user:response.data.user})

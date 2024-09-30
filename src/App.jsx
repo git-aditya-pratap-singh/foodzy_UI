@@ -63,8 +63,8 @@ const App = ()=>{
           <Route path="/login" element={!auth.token ? <Login/> : <Navigate to="/dashboard"/>}/>
           <Route path="/signup" element={<Signup/>}/>
           <Route path="/resetpassword/:id" element={<ResetPassword/>}/>
-          
-         
+          <Route path="/Restaurant/Menu/:id" element={<MenuRestaurant/>}/>
+
           <Route path="/dashboard" element={auth.token ? <Header/> : <Navigate to="/login"/>}>
             {/* Route index element={<Dashboard/>} */}
             <Route index element={<Dashboard/>}/>
@@ -74,8 +74,6 @@ const App = ()=>{
             <Route path="/dashboard/user" element={<User/>}/>
             <Route path="/dashboard/cart" element={<Cart/>}/>
           </Route>
-         
-
           <Route path='/*' element={<PageNotFound/>} />
         </Routes>
       </BrowserRouter>

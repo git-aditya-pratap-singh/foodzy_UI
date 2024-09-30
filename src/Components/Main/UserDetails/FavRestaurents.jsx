@@ -18,7 +18,12 @@ const FavRestaurents = ()=>{
     const [auth, setAuth] = useAuth();
     const getFav = async() => {
         try {
-            await axios.get(`${ServerAPI}/api/favItems/${auth?.user?.email}`)
+            const token = JSON.parse(localStorage.getItem('auth'));
+            const headers = {
+                Authorization: `Bearer ${token?.token}`, 
+                'Content-Type': 'application/json', 
+            };
+            await axios.get(`${ServerAPI}/api/favItems/${auth?.user?.email}`, {headers})
             .then((resp)=>{  
                 setFav(resp.data.response);  
             })
@@ -82,7 +87,12 @@ const FavRestaurents = ()=>{
 const Card = (props)=>{
     const DeleteFav = async(id)=>{
         try{
-            await axios.get(`${ServerAPI}/api/deleteFavriotes/${id}`)
+            const token = JSON.parse(localStorage.getItem('auth'));
+            const headers = {
+                Authorization: `Bearer ${token?.token}`, 
+                'Content-Type': 'application/json', 
+            };
+            await axios.get(`${ServerAPI}/api/deleteFavriotes/${id}`,{headers})
             .then((resp)=>{
                 if(resp.data.success)
                     toast.success(resp.data.message); 

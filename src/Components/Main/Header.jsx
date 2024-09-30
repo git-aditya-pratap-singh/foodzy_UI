@@ -7,11 +7,8 @@ import { FaUserCircle,FaHamburger } from "react-icons/fa";
 import { IoIosArrowDown } from "react-icons/io";
 import logo from '../../assets/logo.png';
 import { useAuth } from "../Context/auth";
-
 import CurrentLocation from "./CurrentLocation";
-
 import { useSelector } from "react-redux";
-
 
 const Header = ()=>{
     const [toggle, setToggle] = useState(false); // used for current location section

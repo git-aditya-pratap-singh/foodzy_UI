@@ -29,12 +29,17 @@ const MenuRestaurant = ()=>{
 
     {/* Favoriate restaurents logic */}
     const SendFav = (favData)=>{
-       axios.post(`${ServerAPI}/api/favRestaurent/${auth.user.email}`, {favData})
+      const token = JSON.parse(localStorage.getItem('auth'));
+      const headers = {
+        Authorization: `Bearer ${token?.token}`, 
+        'Content-Type': 'application/json', 
+      };
+       axios.post(`${ServerAPI}/api/favRestaurent/${auth.user.email}`, {favData}, {headers})
        .then((response)=>{
         if(response.data.success)
            toast.success(response.data.message)
         else
-        toast.error(response.data.message);
+          toast.error(response.data.message);
        })
        .catch((err)=> console.log(err))
     }

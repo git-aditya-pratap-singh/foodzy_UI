@@ -31,11 +31,17 @@ const Cart = ()=>{
     var totalamt = 0;
     var GST = 16;
     var Delivery = 24;
-    //--------------------- SEND ORDERS -----------------------
+
+    //--------------------- SEND ORDERS ----------------------
     const SentOrders = async(event)=>{
         event.preventDefault();
         try{
-           await axios.post(`${ServerAPI}/api/payment-checkout`, {totalamt, GST, Delivery})
+            const token = JSON.parse(localStorage.getItem('auth'));
+            const headers = {
+                Authorization: `Bearer ${token?.token}`, 
+                'Content-Type': 'application/json', 
+            };
+           await axios.post(`${ServerAPI}/api/payment-checkout`, {totalamt, GST, Delivery},{headers} )
             .then((response)=>{
                 if(response.data.success){
                     const options = {
@@ -47,7 +53,7 @@ const Cart = ()=>{
                         image: logo,
                         order_id: response.data.data.id,
                         handler: async (response) => {
-                            await axios.post(`${ServerAPI}/api/paymentverification/${auth?.user?.email}`, {response, foodsItem, totalamt, GST, Delivery})       
+                            await axios.post(`${ServerAPI}/api/paymentverification/${auth?.user?.email}`, {response, foodsItem, totalamt, GST, Delivery}, {headers})       
                             .then((res)=>{
                                 if(res.data.success){
                                     toast.success(res.data.message);

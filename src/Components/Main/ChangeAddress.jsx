@@ -19,7 +19,12 @@ const ChangeAddress = ({value})=>{
 
     const handleSubmit =(event)=>{
         event.preventDefault();
-        axios.put(`${ServerAPI}/api/change-address/${auth.user.id}`, {address, flatno, landmark}) 
+        const token = JSON.parse(localStorage.getItem('auth'));
+        const headers = {
+            Authorization: `Bearer ${token?.token}`, 
+            'Content-Type': 'application/json', 
+        };
+        axios.put(`${ServerAPI}/api/change-address/${auth.user.id}`, {address, flatno, landmark}, {headers}) 
         .then((response)=>{
             if(response.data.success){
                 setAuth({ ...auth, user:response.data.user})

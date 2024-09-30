@@ -16,7 +16,12 @@ const Orders = ()=>{
     // get orders -----------------------------------
     const getOrders = async() => {
         try {
-            await axios.get(`${ServerAPI}/api/orders/${auth?.user?.email}`)
+            const token = JSON.parse(localStorage.getItem('auth'));
+            const headers = {
+                Authorization: `Bearer ${token?.token}`, 
+                'Content-Type': 'application/json', 
+            };
+            await axios.get(`${ServerAPI}/api/orders/${auth?.user?.email}`,{headers})
             .then((resp)=>{
                 setOrders(resp.data); 
             })
@@ -82,7 +87,12 @@ const OrderComponents = (props)=>{
     // delete order -------------------------------------------------
     const deleteOrder = async(id) => {
         try{
-            await axios.get(`${ServerAPI}/api/deleteOrders/${id}`)
+            const token = JSON.parse(localStorage.getItem('auth'));
+            const headers = {
+                Authorization: `Bearer ${token?.token}`, 
+                'Content-Type': 'application/json', 
+            };
+            await axios.get(`${ServerAPI}/api/deleteOrders/${id}`, {headers})
             .then((resp)=>{
                 if(resp.data.success)
                     toast.success(resp.data.message);  
