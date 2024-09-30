@@ -1,1 +1,1 @@
-export const ServerAPI = 'http://localhost:5000';
+export const ServerAPI = 'https://foodzyserver.onrender.com';
